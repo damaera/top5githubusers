@@ -1,7 +1,7 @@
 import { octokit } from "@/lib/octokit";
 
 export type SearchUsersResult = {
-  name: string;
+  login: string;
 }[];
 
 export const searchTop5Users: (args: {
@@ -11,7 +11,7 @@ export const searchTop5Users: (args: {
   const result = await octokit.rest.search.users({ q, page, per_page: 5 });
 
   return result.data.items.map((user) => ({
-    name: user.name ?? "",
+    login: user.login,
   }));
 };
 
