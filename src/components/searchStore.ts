@@ -20,7 +20,11 @@ export const useUserSearchStore = create<UserSearchState>((set) => ({
   error: null,
   //
   setText(text) {
-    set({ text });
+    if (text === "") {
+      set({ text: "", isLoading: false, data: null, error: null });
+    } else {
+      set({ text });
+    }
   },
   fetch(text) {
     if (controller) {
