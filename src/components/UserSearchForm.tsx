@@ -1,6 +1,6 @@
 import { FormEventHandler, useEffect, useState } from "react";
 import { useUserSearchStore } from "./searchStore";
-import { debounce } from "@/lib/utils";
+import useDebounce from "@/lib/hooks";
 
 export const UserSearchForm = () => {
   const { text, setText, fetchSearchUser } = useUserSearchStore((state) => ({
@@ -13,12 +13,12 @@ export const UserSearchForm = () => {
     e.preventDefault();
   };
 
+  const debouncedText = useDebounce<string>(text, 300);
   useEffect(() => {
-    if (text) {
-      console.log(123123);
+    if (debouncedText) {
       fetchSearchUser(text);
     }
-  }, [text]);
+  }, [debouncedText]);
 
   return (
     <form className="flex flex-col gap-2" onSubmit={onSubmitSearch}>
@@ -28,6 +28,7 @@ export const UserSearchForm = () => {
         value={text}
         onChange={(e) => setText(e.target.value)}
       ></input>
+
       <button className="px-4 py-2 rounded bg-blue-600 w-full text-blue-100 font-semibold">
         Search 🔎
       </button>

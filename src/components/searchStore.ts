@@ -26,7 +26,7 @@ export const useUserSearchStore = create<UserSearchState>((set) => ({
     if (controller) {
       controller.abort();
     }
-    set({ text, isLoading: true, data: null, error: null });
+    set({ isLoading: true, data: null, error: null });
 
     controller = new AbortController();
     const signal = controller.signal;
